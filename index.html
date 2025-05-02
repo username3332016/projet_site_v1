@@ -1,0 +1,66 @@
+
+<!--<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<title>Connexion au site</title>
+</head>
+<body >
+
+<p>Renseignements sur le client pour initialiser le panier</p>
+
+<center>
+<div style="background-color: #f0f0f0; border: 1px solid #dcdcdc; border-radius: 15px; padding: 10px; width:28%; ">
+<h2>Login</h2>
+<form method="post"  action="initsession.php">
+	<table border="0">
+	<tr><td><b>Votre nom</b></td>
+	<td><input type="text" name="nom" size="30" required></td></tr>
+	<tr><td><b>Votre prenom</b></td>
+	<td><input type="text" name="prenom" size="30" required></td></tr>
+	<tr><td><b>Votre email</b></td>
+	<td><input type="email" name="email" size="30" required></td></tr>
+	<tr><td><b>Mot de Passe</b></td>
+	<td><input type="password" name="password" size="30" required></td></tr>
+	</table>
+
+<input type="submit" value="Valider">
+</form>
+</div>
+</center>
+</body>
+</html>
+ --> 
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion au site</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Connexion</h2>
+    <form method="post" action="initsession.php">
+        <label>Votre nom</label>
+        <input type="text" name="nom" required>
+
+        <label>Votre prénom</label>
+        <input type="text" name="prenom" required>
+
+        <label>Votre email</label>
+        <input type="email" name="email" required>
+
+        <label>Mot de Passe</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Se connecter</button>
+    </form>
+</div>
+
+</body>
+</html>
+
+
