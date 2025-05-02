@@ -20,7 +20,7 @@
 		$today=date("d.m.y");			#definit la date dans $today
 		
 		$email=$_SESSION['email'];
-		$result = mysqli_query($db, "SELECT id FROM utilisateur WHERE email = '$email'"); 		#requete pour trouver l'idClient
+		$result = mysqli_query($db, "SELECT id FROM utilisateur WHERE email = '$email'"); 		#requete pour trouver l'IdClient
 		$ligne = mysqli_fetch_row($result);
 		$idClient = $ligne[0];
 		mysqli_query($db,"INSERT INTO commande(idclient,date) VALUES($idClient,'$today')"); #ajoute une nouvelle ligne dans la table commande
