@@ -1,0 +1,107 @@
+-- Création de la base de données
+CREATE DATABASE papeterie;
+USE papeterie;
+
+-- Table des utilisateurs
+CREATE TABLE utilisateur (
+    id TINYINT(4) NOT NULL AUTO_INCREMENT,
+    nom VARCHAR(50),
+    prenom VARCHAR(30),
+    email VARCHAR(100) UNIQUE,
+    motdepasse VARCHAR(255) NOT NULL,
+    role ENUM('client', 'admin') DEFAULT 'client',
+    abonnement_id TINYINT(4),
+    objectif_id TINYINT(4),
+    points_fidelite INT DEFAULT 0,
+    PRIMARY KEY (id)
+);
+
+-- Insertion d'un utilisateur exemple
+INSERT INTO utilisateur (nom, prenom, email, motdepasse, role, abonnement_id, objectif_id, points_fidelite)  
+VALUES ('Dupont', 'Jean', 'jeandupont@gmail.com', '123456', 'client', '1', '1', 0);
+
+-- Table des abonnements
+CREATE TABLE abonnement (
+    id TINYINT(4) NOT NULL AUTO_INCREMENT,
+    nom VARCHAR(50),
+    prix DECIMAL(6,2),
+    duree INT ,
+    budget DECIMAL(6,2),
+    PRIMARY KEY (id)
+);
+
+-- Insertion d'un abonnement exemple
+INSERT INTO abonnement (nom, prix, duree, budget) VALUES ('Premium', 29.99, 12, 500);
+
+-- Table des objectifs
+CREATE TABLE objectif (
+    id TINYINT(4) NOT NULL AUTO_INCREMENT,
+    nom VARCHAR(50),
+    description TEXT,
+    PRIMARY KEY (id)
+);
+
+-- Insertion d'un objectif exemple
+INSERT INTO objectif (nom, description) VALUES ('Perte de poids', 'Atteindre un poids de forme avec un programme adapté.');
+
+-- Table des produits
+CREATE TABLE produit (
+    id TINYINT(4) NOT NULL AUTO_INCREMENT,
+    nom VARCHAR(50),
+    description TEXT,
+    prix DECIMAL(6,2),
+    categorie ENUM('Produits de Sport', 'Boxes Culinaires Saines', 'Gummies Compléments', 'Coaching Personnalisé'),
+    objectif_id TINYINT(4),
+    image VARCHAR(100),
+    PRIMARY KEY (id)
+);
+
+-- Insertion d'un produit exemple
+INSERT INTO produit (nom, description, prix, categorie, objectif_id, image) 
+VALUES ('Chaussures running X', 'Idéales pour la course à pied.', 99.99, 'Produits de Sport', 1, 'images/chaussures.jpg');
+
+-- Table des commandes
+CREATE TABLE commande (
+    id TINYINT(4) NOT NULL AUTO_INCREMENT,
+    utilisateur_id TINYINT(4),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    montant DECIMAL(6,2),
+    PRIMARY KEY (id)
+);
+
+
+-- Table des détails de commande
+CREATE TABLE detail_commande (
+    idcommande TINYINT(4) NOT NULL,
+    idproduit TINYINT(4) NOT NULL,
+    quantite TINYINT(4),
+    prix DECIMAL(6,2),
+    PRIMARY KEY(idcommande, idproduit)
+);
+
+
+-- Table du suivi progression
+CREATE TABLE suivi_progression (
+    utilisateur_id TINYINT(4),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    progression TEXT,
+    objectif_id TINYINT(4),
+    PRIMARY KEY (utilisateur_id, date)
+);
+
+-- Insertion d'un suivi progression exemple
+INSERT INTO suivi_progression (utilisateur_id, progression, objectif_id) 
+VALUES (1, '55', 1);
+
+-- Table des avis
+CREATE TABLE avis (
+    produit_id TINYINT(4),
+    utilisateur_id TINYINT(4),
+    note TINYINT(1),
+    commentaire TEXT,
+    PRIMARY KEY (produit_id, utilisateur_id)
+);
+
+-- Insertion d'un avis exemple
+INSERT INTO avis (produit_id, utilisateur_id, note, commentaire) 
+VALUES (1, 1, 5, 'Super chaussures, très confortables !');
