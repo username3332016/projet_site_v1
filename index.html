@@ -1,48 +1,86 @@
-
-<!--<html>
-<head>
-<link rel="stylesheet" href="style.css">
-<title>Connexion au site</title>
-</head>
-<body >
-
-<p>Infos sur le client pour initialiser le panier</p>
-
-<center>
-<div style="background-color: #f0f0f0; border: 1px solid #dcdcdc; border-radius: 15px; padding: 10px; width:28%; ">
-<h2>Login</h2>
-<form method="post"  action="initsession.php">
-	<table border="0">
-	<tr><td><b>Votre nom</b></td>
-	<td><input type="text" name="nom" size="30" required></td></tr>
-	<tr><td><b>Votre prenom</b></td>
-	<td><input type="text" name="prenom" size="30" required></td></tr>
-	<tr><td><b>Votre email</b></td>
-	<td><input type="email" name="email" size="30" required></td></tr>
-	<tr><td><b>Mot de Passe</b></td>
-	<td><input type="password" name="password" size="30" required></td></tr>
-	</table>
-
-<input type="submit" value="Valider">
-</form>
-</div>
-</center>
-</body>
-</html>
- --> 
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion au site</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <title>FitLife - Questionnaire</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #111;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left strong {
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005fa3;
+        }
+    </style>
 </head>
 <body>
 
+<header>
+    <div class="nav-left"><strong>FitLife</strong></div>
+</header>
+
 <div class="container">
-    <h2>Connexion</h2>
+    <h2>Questionnaire</h2>
     <form method="post" action="initsession.php">
         <label>Votre nom</label>
         <input type="text" name="nom" required>
@@ -56,11 +94,31 @@
         <label>Mot de Passe</label>
         <input type="password" name="password" required>
 
-        <button type="submit">Se connecter</button>
+        <label>1. Quel est ton poids actuel ? (en kg)</label>
+        <input type="number" name="poids" required>
+
+        <label>2. Combien de pas as-tu faits aujourd’hui ?</label>
+        <input type="number" name="pas" required>
+
+        <label>3. Combien de litres d’eau as-tu bus aujourd’hui ?</label>
+        <input type="number" name="eau" step="0.1" required>
+
+        <label>4. Combien d’heures as-tu dormi la nuit dernière ?</label>
+        <input type="number" name="sommeil" required>
+
+        <label>5. Sur une échelle de 1 à 10, quel est ton niveau d’énergie aujourd’hui ?</label>
+        <input type="number" name="energie" min="1" max="10" required>
+
+        <label>6. Combien de calories as-tu mangé aujourd’hui ?</label>
+        <input type="number" name="calories_mangees" required>
+
+        <label>7. Combien de calories as-tu brûlées aujourd’hui ?</label>
+        <input type="number" name="calories_brulees" required>
+
+        <button type="submit">Soumettre</button>
     </form>
 </div>
 
 </body>
 </html>
-
 
