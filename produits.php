@@ -1,52 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produits</title>
-    <link rel="stylesheet" href="style.css"> 
+    <title>Nos Produits</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
-    <?php
-    session_start();
-    include "menu.html"; 
-    include "fonctions-panier.php";
-    include "connexion.php";
+<?php
+session_start();
+include "connexion_bdd.php";
+include "fonctions_panier.php";
 
-    // Connexion à la base de données
-    $db = mysqli_connect($host,$login,"",$base);
-    $result = mysqli_query($db,"SELECT * FROM papeterie");
+$db = mysqli_connect($host, $login, "", $base);
+$categorie = isset($_GET['categorie']) ? $_GET['categorie'] : '';
 
-    echo "<div class='container'>";
-    echo "<h2>Nos Produits</h2>";
-    echo "<table class='produits-table'>";
-    echo "<tr><th>Numéro d'identification</th><th>Désignation</th><th>Image</th><th>Prix</th><th>Commander</th></tr>";
+$sql = "SELECT * FROM produit";
+if (!empty($categorie)) {
+    $sql .= " WHERE categorie = '" . mysqli_real_escape_string($db, $categorie) . "'";
+}
+$result = mysqli_query($db, $sql);
+?>
 
-    // Affichage des produits
-    while ($ligne = mysqli_fetch_row($result)) {
-        echo "<tr>
-                <td>".$ligne[0]."</td>
-                <td>".$ligne[1]."</td>
-                <td><img src='".$ligne[2]."' alt='".$ligne[1]."' class='product-image'></td>
-                <td>".$ligne[3]."€</td>
-                <td>
-                    <form method='GET' action='commande.php'>
-                        <input type='hidden' name='article' value='$ligne[0]'>
-                        <label>Quantité :</label>
-                        <input type='number' name='quantite' value='1' min='1' max='10'>
-                        <button type='submit' class='btn-commander'>Commander</button>
-                    </form>
-                </td>
-              </tr>";
-    }
-    echo "</table>";
 
-    echo "<br /><p>Vous êtes ".$_SESSION['prenom']." ".$_SESSION['nom']."</p>";
-    afficherpanier();
-    echo "</div>";
 
-    ?>
+<header>
+    <div class="nav-left"><strong>FitLife</strong></div>
+    <div class="nav-right">
+        <a href="register.html">S'inscrire</a>
+        <a href="login.html">Se connecter</a>
+        <a href="produits.php"><i class="$fa-var-shopping-cart"></i></a>
+    </div>
+</header>
+
+<div class="filter-bar">
+    <form method="get">
+        <label for="categorie">Catégorie :</label>
+        <select name="categorie" onchange="this.form.submit()">
+            <option value="">-- Toutes --</option>
+            <option value="Produits de Sport" <?= $categorie == 'Produits de Sport' ? 'selected' : '' ?>>Produits de Sport</option>
+            <option value="Boxes Culinaires Saines" <?= $categorie == 'Boxes Culinaires Saines' ? 'selected' : '' ?>>Boxes Culinaires</option>
+            <option value="Gummies Compléments" <?= $categorie == 'Gummies Compléments' ? 'selected' : '' ?>>Gummies</option>
+            <option value="Coaching Personnalisé" <?= $categorie == 'Coaching Personnalisé' ? 'selected' : '' ?>>Coaching</option>
+        </select>
+    </form>
+</div>
+
+<section class="products-section" id="produits">  
+    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+        
+        <a href="produit.php?id=<?= $row['id'] ?>">
+        <div class="product-card" >
+            <img src="<?= $row['image'] ?>" alt="<?= $row['nom'] ?>">
+            <div class="info">
+                <h3><?= $row['nom'] ?></h3>
+                <p><?= $row['description'] ?></p>
+                <div class="prix"><?= $row['prix'] ?> €</div>
+            </div>
+            <form method="post" action="ajouterArticle.php">
+                <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                <input type="hidden" name="quantite" value="1">
+                <button type="submit" class="add-button"><i class="fa fa-cart-plus"></i> Ajouter au panier</button>
+            </form>
+        </div>
+        </a>
+    <?php } ?>
+</section>
+
+
+
+<footer>
+    <p>&copy; 2025 FitLife. Coaching personnalisé & boutique sportive.</p>
+    <p>Contact : contact@fitlife.fr</p>
+</footer>
 
 </body>
 </html>
