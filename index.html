@@ -1,66 +1,61 @@
 
-<!--<html>
-<head>
-<link rel="stylesheet" href="style.css">
-<title>Connexion au site</title>
-</head>
-<body >
-
-<p>Infos sur le client pour initialiser le panier</p>
-
-<center>
-<div style="background-color: #f0f0f0; border: 1px solid #dcdcdc; border-radius: 15px; padding: 10px; width:28%; ">
-<h2>Login</h2>
-<form method="post"  action="initsession.php">
-	<table border="0">
-	<tr><td><b>Votre nom</b></td>
-	<td><input type="text" name="nom" size="30" required></td></tr>
-	<tr><td><b>Votre prenom</b></td>
-	<td><input type="text" name="prenom" size="30" required></td></tr>
-	<tr><td><b>Votre email</b></td>
-	<td><input type="email" name="email" size="30" required></td></tr>
-	<tr><td><b>Mot de Passe</b></td>
-	<td><input type="password" name="password" size="30" required></td></tr>
-	</table>
-
-<input type="submit" value="Valider">
-</form>
-</div>
-</center>
-</body>
-</html>
- --> 
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion au site</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Coaching & Objectifs</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
-<div class="container">
-    <h2>Connexion</h2>
-    <form method="post" action="initsession.php">
-        <label>Votre nom</label>
-        <input type="text" name="nom" required>
+    <!-- Menu  -->
+    <header>
+        <div class="nav-left"><strong>FitLife</strong></div>
+        <div class="nav-right">
+            <a href="register.html">S'inscrire</a>
+            <a href="login.html">Se connecter</a>
+            <a href="produits.php"><i class="$fa-var-shopping-cart"></i></a>
+        </div>
+    </header>
 
-        <label>Votre prénom</label>
-        <input type="text" name="prenom" required>
+    <!-- Bannière principale avec image locale -->
+    <section class="hero">
+        <img src="img/hero.jpg" alt="Motivation musculation">
+        <h1>Transforme ton corps, change ta vie</h1>
+    </section>
 
-        <label>Votre email</label>
-        <input type="email" name="email" required>
+    <!-- Section Programmes -->
+    <section class="program-section" id="programmes">
+        <h2>Nos Programmes</h2>
+        <div class="programs">
 
-        <label>Mot de Passe</label>
-        <input type="password" name="password" required>
+            <div class="program">
+                <a href="index.html">Perte de poids</a>
+                <p>Ce programme vous aidera à brûler les graisses efficacement grâce à une combinaison d’exercices cardio, de renforcement et de conseils nutritionnels adaptés.</p>
+            </div>
 
-        <button type="submit">Se connecter</button>
-    </form>
-</div>
+            <div class="program">
+                <a href="index.html">Gain de muscle</a>
+                <p>Développez votre masse musculaire avec des entraînements ciblés, progressifs et personnalisés, pour pour des résultats visibles et durables.</p>
+            </div>
+
+            <div class="program">
+                <a href="index.html">Endurance</a>
+                <p>Améliorez votre forme cardiovasculaire, votre souffle et votre capacité à tenir sur la durée avec notre programme d’endurance complet.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+
+    <footer>
+        <p>&copy; 2025 FitLife. Coaching personnalisé & boutique sportive.</p>
+        <p>Contact : contact@fitlife.fr</p>
+    </footer>
 
 </body>
 </html>
-
 
