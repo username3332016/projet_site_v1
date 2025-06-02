@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLife - Votre Vie Saine et Équilibrée</title>
+    <link rel="stylesheet" href="font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">FitLife</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')">Accueil</a></li>
+                <li><a href="#" onclick="showSection('products')">Produits</a></li>
+                <li><a href="#" onclick="showSection('progress')">Progression</a></li>
+                <li><a href="#" onclick="showSection('profile')">Profil</a></li>
+            </ul>
+            <div class="user-actions">
+                <div class="cart-icon" onclick="showSection('cart')">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+                <button class="btn btn-primary" id="auth-btn" onclick="toggleAuth()">Connexion</button>
+                <button class="btn btn-secondary" id="admin-btn" onclick="showSection('admin')" style="display: none;">Admin</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Section Accueil -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>Transformez votre vie</h1>
+                <p>Une plateforme complète pour atteindre vos objectifs santé</p>
+                <button class="btn btn-primary btn-large" onclick="showSection('products')">
+                    Découvrir
+                </button>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-dumbbell"></i>
+                    </div>
+                    <h3>Équipement Sport</h3>
+                    <p>Matériel premium pour tous vos entraînements</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <h3>Compléments</h3>
+                    <p>Gummies naturels pour votre bien-être</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-cutlery"></i>
+                    </div>
+                    <h3>Nutrition</h3>
+                    <p>Boxes repas équilibrés et savoureux</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <h3>Coaching</h3>
+                    <p>Accompagnement personnalisé par des experts</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Produits -->
+        <section id="products" class="section">
+            <div class="products-header">
+                <h2>Nos produits</h2>
+                <div class="category-filters">
+                    <button class="filter-btn active" onclick="filterProducts('all')">Tous</button>
+                    <button class="filter-btn" onclick="filterProducts('Produits de Sport')">Sport</button>
+                    <button class="filter-btn" onclick="filterProducts('Gummies Compléments')">Gummies</button>
+                    <button class="filter-btn" onclick="filterProducts('Boxes Culinaires Saines')">Nutrition</button>
+                    <button class="filter-btn" onclick="filterProducts('Coaching Personnalisé')">Coaching</button>
+                </div>
+            </div>
+            <div class="products-grid" id="products-container">
+                <!-- Les produits seront ajoutés dynamiquement -->
+            </div>
+        </section>
+
+        <!-- Section Panier -->
+        <section id="cart" class="section">
+            <h2>Panier</h2>
+            <div id="cart-items">
+                <div class="empty-state">
+                    <i class="fa fa-shopping-cart"></i>
+                    <p>Votre panier est vide</p>
+                </div>
+            </div>
+            <div class="cart-summary" id="cart-summary" style="display: none;">
+                <div class="cart-total" id="cart-total">Total: 0.00€</div>
+                <button class="btn btn-primary btn-large" id="checkout-btn" onclick="checkout()">
+                    Commander
+                </button>
+            </div>
+        </section>
+
+        <!-- Section Connexion/Inscription -->
+        <section id="auth" class="section">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2 id="auth-title">Connexion</h2>
+                    <p id="auth-subtitle">Accédez à votre espace personnel</p>
+                </div>
+
+                <form id="auth-form" class="auth-form">
+                    <!-- Étape 1: Informations de base -->
+                    <div id="step-1" class="auth-step active">
+                        <div class="form-group" id="nom-group" style="display: none;">
+                            <input type="text" id="nom" name="nom" placeholder="Nom" required>
+                        </div>
+                        <div class="form-group" id="prenom-group" style="display: none;">
+                            <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-full" id="next-step-btn" onclick="nextAuthStep()">
+                            Continuer
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-full" id="login-btn">
+                            Se connecter
+                        </button>
+                    </div>
+
+                    <!-- Étape 2: Informations personnelles -->
+                    <div id="step-2" class="auth-step">
+                        <div class="form-group">
+                            <input type="number" id="poids" name="poids" placeholder="Poids (kg)" min="30" max="200" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="taille" name="taille" placeholder="Taille (cm)" min="120" max="250" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="objectif" name="objectif" required>
+                                <option value="">Choisir un objectif</option>
+                                <option value="1">Perte de poids</option>
+                                <option value="2">Prise de muscle</option>
+                                <option value="3">Remise en forme</option>
+                                <option value="4">Maintien</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-full" onclick="prevAuthStep()">
+                            Retour
+                        </button>
+                        <button type="button" class="btn btn-primary btn-full" onclick="nextAuthStep()">
+                            Continuer
+                        </button>
+                    </div>
+
+                    <!-- Étape 3: Choix abonnement -->
+                    <div id="step-3" class="auth-step">
+                        <div class="subscription-plans">
+                            <div class="plan-card" onclick="selectPlan(1)">
+                                <input type="radio" name="abonnement" value="1" id="plan-1">
+                                <div class="plan-header">
+                                    <h3>FitLight</h3>
+                                    <div class="plan-price">19.99€<span>/mois</span></div>
+                                </div>
+                                <ul class="plan-features">
+                                    <li><i class="fa fa-check"></i> Tous les produits</li>
+                                    <li><i class="fa fa-check"></i> Suivi progression</li>
+                                    <li><i class="fa fa-check"></i> Support client</li>
+                                </ul>
+                            </div>
+                            <div class="plan-card recommended" onclick="selectPlan(2)">
+                                <div class="plan-badge">Recommandé</div>
+                                <input type="radio" name="abonnement" value="2" id="plan-2">
+                                <div class="plan-header">
+                                    <h3>FitPlus</h3>
+                                    <div class="plan-price">39.99€<span>/mois</span></div>
+                                </div>
+                                <ul class="plan-features">
+                                    <li><i class="fa fa-check"></i> Tous les avantages FitLight</li>
+                                    <li><i class="fa fa-check"></i> Coaching personnalisé</li>
+                                    <li><i class="fa fa-check"></i> Contenus exclusifs</li>
+                                    <li><i class="fa fa-check"></i> Support prioritaire</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-full" onclick="prevAuthStep()">
+                            Retour
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-full" id="register-btn">
+                            Créer mon compte
+                        </button>
+                    </div>
+                </form>
+
+                <div class="auth-switch">
+                    <span id="switch-text">Pas encore de compte ?</span>
+                    <a href="#" onclick="switchAuthMode()" id="switch-link">S'inscrire</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Profil -->
+        <section id="profile" class="section">
+            <div class="profile-container">
+                <h2>Mon profil</h2>
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <label>Nom complet</label>
+                            <span id="profile-nom">-</span> <span id="profile-prenom"></span>
+                        </div>
+                        <div class="info-item">
+                            <label>Email</label>
+                            <span id="profile-email">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Abonnement</label>
+                            <span id="profile-abonnement">-</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Objectif</label>
+                            <span id="profile-objectif">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Progression -->
+        <section id="progress" class="section">
+            <div class="progress-container">
+                <h2>Ma progression</h2>
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <h3 id="progress-objective">Votre objectif</h3>
+                        <div class="progress-percentage">
+                            <span id="progress-percent">0</span>%
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa fa-balance-scale"></i></div>
+                        <div class="stat-value" id="stat-weight">0</div>
+                        <div class="stat-label">kg</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa fa-shoe-prints"></i></div>
+                        <div class="stat-value" id="stat-steps">0</div>
+                        <div class="stat-label">pas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa fa-tint"></i></div>
+                        <div class="stat-value" id="stat-water">0</div>
+                        <div class="stat-label">litres</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa fa-moon-o"></i></div>
+                        <div class="stat-value" id="stat-sleep">0</div>
+                        <div class="stat-label">heures</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="updateProgress()">
+                    Mettre à jour
+                </button>
+            </div>
+        </section>
+
+        <!-- Section Admin -->
+        <section id="admin" class="section">
+            <div class="admin-container">
+                <h2>Administration</h2>
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <i class="fa fa-chart-bar"></i>
+                            <h3>Statistiques</h3>
+                        </div>
+                        <div class="admin-stats">
+                            <div class="admin-stat">
+                                <span class="stat-number" id="admin-users">12</span>
+                                <span class="stat-text">Utilisateurs</span>
+                            </div>
+                            <div class="admin-stat">
+                                <span class="stat-number" id="admin-orders">45</span>
+                                <span class="stat-text">Commandes</span>
+                            </div>
+                            <div class="admin-stat">
+                                <span class="stat-number" id="admin-revenue">2,850€</span>
+                                <span class="stat-text">CA du mois</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <i class="fa fa-users"></i>
+                            <h3>Utilisateurs</h3>
+                        </div>
+                        <div class="admin-actions">
+                            <button class="btn btn-secondary">Voir tous</button>
+                            <button class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <i class="fa fa-box"></i>
+                            <h3>Produits</h3>
+                        </div>
+                        <div class="admin-actions">
+                            <button class="btn btn-secondary">Gérer</button>
+                            <button class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <i class="fa fa-shopping-cart"></i>
+                            <h3>Commandes</h3>
+                        </div>
+                        <div class="admin-actions">
+                            <button class="btn btn-secondary">Traiter</button>
+                            <button class="btn btn-primary">Exporter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

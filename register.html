@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>FitLife - Questionnaire</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .etape-form {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+            .etape-form.active {
+                display: block;
+            }
+
+        .barre-progression {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .progression {
+            height: 100%;
+            background: #ff4d4d;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .conteneur {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .boutons-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .question {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+            button.suivant {
+                background: #ff4d4d;
+                color: white;
+            }
+
+            button.precedent {
+                background: #f0f0f0;
+                color: #333;
+            }
+
+            button:hover {
+                opacity: 0.9;
+                transform: translateY(-2px);
+            }
+    </style>
+</head>
+<body>
+    <div class="conteneur">
+        <div class="barre-progression">
+            <div class="progression" style="width: 0%"></div>
+        </div>
+
+        <form id="questionnaireForm" method="post" action="calcul_objectif.php">
+            <!-- 1 nom , prenom et mail-->
+            <div class="etape-form active" data-etape="1">
+                <div class="question">
+                    <h3>Quel est votre prenom ?</h3>
+                    <input type="text" name="prenom" placeholder="Votre prénom" required>
+                </div>
+                <div class="question">
+                    <h3>Quel est votre nom ?</h3>
+                    <input type="text" name="nom" placeholder="Votre nom" required>
+                </div>
+                <div class="question">
+                    <h3>Quel est votre email ?</h3>
+                    <input type="email" name="email" placeholder="Votre email" required>
+                </div>
+                <div class="boutons-navigation">
+                    <div></div>
+                    <button type="button" class="suivant" onclick="etapeSuivante()">Suivant</button>
+                </div>
+            </div>
+
+            <!-- 2 mdp -->
+            <div class="etape-form" data-etape="2">
+                <div class="question">
+                    <h3>Choisissez un mot de passe ?</h3>
+                    <input type="password" name="password" placeholder="*******" required>
+                </div>
+                <div class="boutons-navigation">
+                    <button type="button" class="precedent" onclick="etapePrecedente()">Précédent</button>
+                    <button type="button" class="suivant" onclick="etapeSuivante()">Suivant</button>
+                </div>
+            </div>
+
+            <!-- 3 age -->
+            <div class="etape-form" data-etape="3">
+                <div class="question">
+                    <h3>Quel est votre age ?</h3>
+                    <input type="number" name="age" placeholder="Votre age" required>
+                </div>
+                <div class="boutons-navigation">
+                    <button type="button" class="precedent" onclick="etapePrecedente()">Précédent</button>
+                    <button type="button" class="suivant" onclick="etapeSuivante()">Suivant</button>
+                </div>
+            </div>
+
+
+            <!-- 4 poids -->
+            <div class="etape-form" data-etape="4">
+                <div class="question">
+                    <h3>Quel est votre poids actuel ?</h3>
+                    <input type="number" name="poids" placeholder="Votre poids en kg" step="0.1" required>
+                </div>
+                <div class="boutons-navigation">
+                    <button type="button" class="precedent" onclick="etapePrecedente()">Précédent</button>
+                    <button type="button" class="suivant" onclick="etapeSuivante()">Suivant</button>
+                </div>
+            </div>
+
+            <!-- 5 taille -->
+            <div class="etape-form" data-etape="5">
+                <div class="question">
+                    <h3>Quelle est votre taille ?</h3>
+                    <input type="number" name="taille" placeholder="Votre taille en cm" required>
+                </div>
+                <div class="boutons-navigation">
+                    <button type="button" class="precedent" onclick="etapePrecedente()">Précédent</button>
+                    <button type="button" class="suivant" onclick="etapeSuivante()">Suivant</button>
+                </div>
+            </div>
+
+            <!-- 6 activité -->
+            <div class="etape-form" data-etape="6">
+                <div class="question">
+                    <h3>Quel est votre niveau d'activité physique ?</h3>
+                    <select name="activite" required>
+                        <option value="sedentaire">Sédentaire (peu ou pas d'exercice)</option>
+                        <option value="leger">Légèrement actif (1-3 jours/semaine)</option>
+                        <option value="modere">Modérément actif (3-5 jours/semaine)</option>
+                        <option value="actif">Très actif (6-7 jours/semaine)</option>
+                    </select>
+                </div>
+                <div class="boutons-navigation">
+                    <button type="button" class="precedent" onclick="etapePrecedente()">Précédent</button>
+                    <button type="submit" class="suivant">Terminer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let etapeActuelle = 1;
+        const nombreEtapes = 6;
+
+        function mettreAJourProgression() {
+            const pourcentage = ((etapeActuelle - 1) / (nombreEtapes - 1)) * 100;
+            document.querySelector('.progression').style.width = pourcentage + '%';
+        }
+
+        function etapeSuivante() {
+            if (etapeActuelle < nombreEtapes) {
+                // Vérifier si les champs de l'étape actuelle sont remplis
+                const etapeActuelleDiv = document.querySelector(`.etape-form[data-etape="${etapeActuelle}"]`);
+                const champsRequis = etapeActuelleDiv.querySelectorAll('[required]');
+                let tousChampsSontRemplis = true;
+
+                champsRequis.forEach(champ => {
+                    if (!champ.value) {
+                        tousChampsSontRemplis = false;
+                        champ.style.borderColor = 'red';
+                    } else {
+                        champ.style.borderColor = '#ddd';
+                    }
+                });
+
+                if (!tousChampsSontRemplis) {
+                    alert('Veuillez remplir tous les champs requis.');
+                    return;
+                }
+
+                document.querySelector(`.etape-form[data-etape="${etapeActuelle}"]`).classList.remove('active');
+                etapeActuelle++;
+                document.querySelector(`.etape-form[data-etape="${etapeActuelle}"]`).classList.add('active');
+                mettreAJourProgression();
+            }
+        }
+
+        function etapePrecedente() {
+            if (etapeActuelle > 1) {
+                document.querySelector(`.etape-form[data-etape="${etapeActuelle}"]`).classList.remove('active');
+                etapeActuelle--;
+                document.querySelector(`.etape-form[data-etape="${etapeActuelle}"]`).classList.add('active');
+                mettreAJourProgression();
+            }
+        }
+
+        // Gestion de la soumission du formulaire
+        document.getElementById('questionnaireForm').onsubmit = function (e) {
+            const etapeActuelleDiv = document.querySelector(`.etape-form[data-etape="${etapeActuelle}"]`);
+            const champsRequis = etapeActuelleDiv.querySelectorAll('[required]');
+            let tousChampsSontRemplis = true;
+
+            champsRequis.forEach(champ => {
+                if (!champ.value) {
+                    tousChampsSontRemplis = false;
+                    champ.style.borderColor = 'red';
+                }
+            });
+
+            if (!tousChampsSontRemplis) {
+                e.preventDefault();
+                alert('Veuillez remplir tous les champs requis.');
+            }
+        };
+    </script>
+</body>
+</html>
